@@ -1,0 +1,5 @@
+/.vscode
+/cell.o
+/puzzle.o
+/solver.exe
+/solver.o
