@@ -12,6 +12,8 @@ class Cell{
         ~Cell();
         void set_value(int);
         void print_value();
+        void print_notes();
+        void set_note(int, int);
 
 };
 

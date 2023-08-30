@@ -54,3 +54,17 @@ void Cell::set_value(int v){
 void Cell::print_value(){
     cout << value;
 }
+
+void Cell::print_notes(){
+    for (int i = 0; i < 9; i++){
+        cout << notes[i];
+    }
+    cout << endl;
+}
+
+
+void Cell::set_note(int i, int v){
+    if (i >= 1 && i <= 9){
+        notes[i-1] = v;
+    }
+}
