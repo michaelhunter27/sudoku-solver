@@ -99,3 +99,125 @@ void Puzzle::set_cell(int row, int col, int v){
     }
 
 }
+
+//checks if there is only one possible value for a cell
+//looking only at that cell's notes
+int Puzzle::check_cell(int row, int col){
+    int value = 0;
+    int num_notes = 0;
+
+    // check if only one value is possible
+    for (int v = 1; v <= 9; v++){
+        num_notes += grid[row][col].get_note(v);
+        if (grid[row][col].get_note(v) == 1){
+            value = v;
+        }
+    }
+    if (num_notes == 1){
+        return value;
+    }
+    return 0;
+}
+
+int Puzzle::check_row(int row, int col){
+    int num_notes = 0;
+    for (int v = 1; v <= 9; v++){
+        if (grid[row][col].get_note(v) == 1){
+            num_notes = 0;
+            for (int k = 0; k < 9; k++){
+                if (k != col){
+                    num_notes += grid[row][k].get_note(v);
+                }
+            }
+            if (num_notes == 0){
+                return v;
+            }
+        }
+    }
+    return 0;
+}
+
+int Puzzle::check_col(int row, int col){
+    int num_notes = 0;
+    for (int v = 1; v <= 9; v++){
+        if (grid[row][col].get_note(v) == 1){
+            num_notes = 0;
+            for (int k = 0; k < 9; k++){
+                if (k != row){
+                    num_notes += grid[k][col].get_note(v);
+                }
+            }
+            if (num_notes == 0){
+                return v;
+            }
+        }
+    }
+    return 0;
+}
+
+int Puzzle::check_box(int row, int col){
+    int box_row = row / 3;
+    int box_col = col / 3;
+    for (int v = 1; v <= 9; v++){
+        if (grid[row][col].get_note(v) == 1){
+            int num_notes = 0;
+            for (int r = box_row * 3; r < (box_row + 1) * 3; r++){
+              for (int c = box_col * 3; c < (box_col + 1) * 3; c++){
+                   if (r != row || c != col){
+                        num_notes += grid[r][c].get_note(v);
+                   }
+                }
+            }
+            if (num_notes == 0){
+                return v;
+            }
+        }
+    }
+    return 0;
+}
+
+void Puzzle::notes_solve(){
+    int num_filled_in = 0;
+    do{
+        num_filled_in = 0;
+        //iterate through all cells
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                
+                if (grid[i][j].get_value() != 0){
+                    continue;
+                }
+                
+                int value = 0;
+                
+                value = check_cell(i, j);
+                if (value != 0){
+                    set_cell(i, j, value);
+                    num_filled_in++;
+                    continue;
+                }
+
+                value = check_row(i, j);
+                if (value != 0){
+                    set_cell(i, j, value);
+                    num_filled_in++;
+                    continue;
+                }
+
+                value = check_col(i, j);
+                if (value != 0){
+                    set_cell(i, j, value);
+                    num_filled_in++;
+                    continue;
+                }
+                        
+                value = check_box(i, j);
+                if (value != 0){
+                    set_cell(i, j, value);
+                    num_filled_in++;
+                    continue;
+                }
+            }
+        }
+    }while(num_filled_in != 0);
+}

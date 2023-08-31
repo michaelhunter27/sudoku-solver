@@ -50,6 +50,10 @@ void Cell::set_value(int v){
     }
 }
 
+int Cell::get_value(){
+    return value;
+}
+
 
 void Cell::print_value(){
     cout << value;
@@ -67,4 +71,11 @@ void Cell::set_note(int i, int v){
     if (i >= 1 && i <= 9){
         notes[i-1] = v;
     }
+}
+
+int Cell::get_note(int i){
+    if (i >= 1 && i <= 9){
+        return notes[i-1];
+    }
+    return -1;
 }

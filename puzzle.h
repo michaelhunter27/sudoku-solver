@@ -23,14 +23,12 @@ class Puzzle{
         int load_puzzle(string);
         void print_puzzle();
         void set_cell(int, int, int);
-
-
-    
-
-
+        int check_cell(int, int);
+        int check_row(int, int);
+        int check_col(int, int);
+        int check_box(int, int);
+        void notes_solve();
 
 };
-
-
 
 #endif
